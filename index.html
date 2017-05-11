@@ -80,12 +80,15 @@ funcao_horarioShutdown = function(_condicao){
 
 <script>
 $(document).ready(function(){
-	$('p').empty();
-	var _myTime = new Date();
-	if( _myTime.getHours() <= 12 ) funcao_horarioShutdown("manha");
-	if( _myTime.getHours() <= 18 ) funcao_horarioShutdown("tarde");
-	else $('p:eq(0)').empty().append('<strong>O espediente por hoje acabou.</strong>');
-    //$("#btn1").on('click', function(){});
+
+	$('#btn1').click(function(){
+		$('p').empty();
+		var _myTime = new Date();
+		if( _myTime.getHours() <= 12 ) funcao_horarioShutdown("manha");
+		if( _myTime.getHours() <= 18 ) funcao_horarioShutdown("tarde");
+		else $('p:eq(0)').empty().append('<strong>O espediente por hoje acabou.</strong>');
+	    //$("#btn1").on('click', function(){});
+	});
 });
 </script>
 
