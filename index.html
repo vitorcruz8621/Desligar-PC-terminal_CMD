@@ -14,13 +14,13 @@
 
 <script>
 
-funcao_exibirHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _shutdown, myTime){
+funcao_exibirHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _shutdown, _myTime){
 	console.log("\n" +
-				_faltamHoras + "\n" +
-				_faltamMinutos + "\n" +
-				_faltamSegundos + "\n" +
-				myTime + "\n" +
-				_shutdown + "\n");
+				"Faltam horas = " + _faltamHoras + "\n" +
+				"Faltam minutos = " + _faltamMinutos + "\n" +
+				"Faltam segundos = " + _faltamSegundos + "\n" +
+				"Data Completa = " + _myTime + "\n" +
+				"Horario desligamento(segundos)" + _shutdown + "\n");
 }
 
 funcao_calcularHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _condicao){
@@ -54,7 +54,7 @@ funcao_horarioShutdown = function(_condicao){
 			$("p:eq(0)").append(
 				"Para desligar o computador automaticamente às 12:00" + 
 				", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)"+
-				"<br/><b>shutdown -s -t "+_shutdown+"</b>"
+				"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"'>"
 			);
 			break;
 
@@ -62,12 +62,25 @@ funcao_horarioShutdown = function(_condicao){
 			$("p:eq(1)").append(
 				"Para desligar o computador automaticamente às 18:00" + 
 				", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)"+
-				"<br/><b>shutdown -s -t "+_shutdown+"</b>"
+				"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"'>"
 			);
 			break;
 
 		default: break;
 	}
+	
+	/*
+	se (_shutdown / 3600) > 0 ---> _faltamhoras
+	se (_shutdown % 3600) > 0 ---> _faltamMinutos
+	se (_shutdown % 3600) > 0 ---> _faltamSegundos
+	*/
+
+	_faltamHoras = ((_faltamMinutos / 60) >= 1) ? (_faltamMinutos / 60) : 0;
+	_faltamMinutos = ((_shutdown / 60) >= 1) ? (_shutdown / 60) : 0;
+	_faltamSegundos = ((_faltamMinutos % 60) >= 1) ? (_faltamMinutos / 60) : 0;	
+
+	funcao_exibirHorario(_faltamHoras, _faltamMinutos, _faltamSegundos, _myTime);
+
 	return;
 }
 </script>
