@@ -61,8 +61,10 @@ funcao_horarioShutdown = function(_condicao){
 		case 'tarde':
 			$("p:eq(1)").append(
 				"Para desligar o computador automaticamente às 18:00" + 
-				", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)"+
-				"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"'>"
+				", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)" +
+				"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"'>" +
+				"<p/>Para cancelar o desligamento do computador, insira no CMD o comando:" +
+				"<br/> <input type='text' value='shutdown -a'>"
 			);
 			break;
 
