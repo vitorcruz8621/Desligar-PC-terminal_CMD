@@ -16,9 +16,9 @@
 
 funcao_exibirHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _shutdown, _myTime){
 	console.log("\n" +
-				"Faltam horas = " + _faltamHoras + "\n" +
-				"Faltam minutos = " + _faltamMinutos + "\n" +
-				"Faltam segundos = " + _faltamSegundos + "\n" +
+				"Faltam horas = " + _faltamHoras.toFixed(2) + "\n" +
+				"Faltam minutos = " + _faltamMinutos.toFixed(2) + "\n" +
+				"Faltam segundos = " + _faltamSegundos.toFixed(2) + "\n" +
 				"Data Completa = " + _myTime + "\n" +
 				"Horario desligamento(segundos)" + _shutdown + "\n");
 }
