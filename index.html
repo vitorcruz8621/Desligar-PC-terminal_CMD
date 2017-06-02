@@ -66,14 +66,6 @@ funcao_horarioShutdown = function(_condicao){
 
 	} else{ }
 
-	$("p:eq(2)").append(
-			"Faltam horas = " + _faltamHoras.toFixed(2) + "<br/>" +
-			"Faltam minutos = " + _faltamMinutos.toFixed(2) + "<br/>" +
-			"Faltam segundos = " + _faltamSegundos.toFixed(2) + "<br/>" +
-			"Data Completa = " + _myTime + "<br/>" +
-			"Horario desligamento(segundos)" + _shutdown + "<br/>"
-		);
-	
 	/*
 	se (_shutdown / 3600) > 0 ---> _faltamhoras
 	se (_shutdown % 3600) > 0 ---> _faltamMinutos
@@ -82,7 +74,15 @@ funcao_horarioShutdown = function(_condicao){
 
 	_faltamHoras = ((_faltamMinutos / 60) >= 1) ? (_faltamMinutos / 60) : 0;
 	_faltamMinutos = ((_shutdown / 60) >= 1) ? (_shutdown / 60) : 0;
-	_faltamSegundos = ((_faltamMinutos % 60) >= 1) ? (_faltamMinutos / 60) : 0;	
+	_faltamSegundos = ((_faltamMinutos % 60) >= 1) ? (_faltamMinutos / 60) : 0;
+
+	$("p:eq(2)").append(
+			"Faltam horas = " + _faltamHoras.toFixed(2) + "<br/>" +
+			"Faltam minutos = " + _faltamMinutos.toFixed(2) + "<br/>" +
+			"Faltam segundos = " + _faltamSegundos.toFixed(2) + "<br/>" +
+			"Data Completa = " + _myTime + "<br/>" +
+			"Horario desligamento(segundos)" + _shutdown + "<br/>"
+	);
 
 	//funcao_exibirHorario(_faltamHoras, _faltamMinutos, _faltamSegundos, _myTime);
 
