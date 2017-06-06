@@ -8,30 +8,54 @@
 </head>
     <body>
         <?php
-        $arquivo_name = 'arquivo_vitor.txt';
+        /*------------------------------------------------------------------------------
+        **------------------------------------------------------------------------------
+        ------------------------------------------------------------------------------*/
 
-        function acrescentar_txt($arquivo_name, $minutos, $segundos){
+        /*
+        ** Funções
+        */
+
+        function txt_acrescentar($arquivo_name, $minutos, $segundos, $horas){
             $myfile = fopen($arquivo_name, a) or die ("arquivo não encontrado");
-            fwrite($myfile, "\n---minutos---> ".$minutos." / ");
+
+            fwrite($myfile, "\n" . $horas);
             
-            if($segundos != 0){
-                if($segundos >= 10) { fwrite($myfile, " ---segundos--> ".$segundos." / FIM"); }
-                else { fwrite($myfile, " ---segundos--> 0".$segundos." / FIM"); }
-            }
+            if($minutos >=10 ){ fwrite($myfile, ":" . $minutos . ":"); }
+            else { fwrite($myfile, ":0" . $minutos . ":"); }
+            
+            if($segundos >= 10) { fwrite($myfile, $segundos." / FIM"); }
+            else { fwrite($myfile, "0" . $segundos . " / FIM"); }
+
+            if($segundos % 15 == 0) { fwrite($myfile, "---------------------------------"); }
 
             fclose($myfile);
         }
 
-        function iniciar_txt($arquivo_name){
+        function txt_calcular_todos($arquivo_name){
+            for ($cont = 14400; $cont > 0; $cont--) {
+                
+                //$horas = number_format( ($cont / 3600), 3, ',', '.');
+                //$minutos = number_format( ($cont % 3600), 2, ',', '.' );
+                //$segundos = number_format( ($cont % 3600 % 60), 0, ',', '.' );
+
+                $horas = floor($cont / 3600);
+                $minutos = floor( ($cont / 60) - ($horas * 60) );
+                $segundos = ($cont % 3600) % 60;
+
+                txt_acrescentar($arquivo_name, $minutos, $segundos, $horas);
+            }
+        }
+
+        function txt_iniciar($arquivo_name){
             $myfile = fopen($arquivo_name, w) or die ("arquivo não encontrado");
             fwrite($myfile, "Números:\n");
 
             fclose($myfile);
         }
 
-        function ler_txt($arquivo_name){
+        function txt_ler($arquivo_name){
             $myfile = fopen($arquivo_name, r) or die ("arquivo não encontrado");
-            //echo fread($myfile, filesize($arquivo_name));
 
             while(!feof($myfile)) {
                 echo fgets($myfile) . "<br>";
@@ -40,19 +64,22 @@
             fclose($myfile);
         }
 
-        iniciar_txt($arquivo_name);
+        /*------------------------------------------------------------------------------
+        **------------------------------------------------------------------------------
+        ------------------------------------------------------------------------------*/
 
-        echo (6 - ceil(5.8) . "<p/>");
+        /*
+        ** Menu Principal
+        */
 
-        for ($cont = 14400; $cont > 0; $cont--) {
+        $arquivo_name = 'arquivo_vitor.txt';
 
-            $minutos = number_format( ($cont/60), 3, ',', '.' );
-            $segundos = number_format( ($cont % 60), 0, ',', '.' );
+        txt_iniciar($arquivo_name);
 
-            acrescentar_txt($arquivo_name, $minutos, $segundos);
-        }
+        txt_calcular_todos($arquivo_name);
 
-        ler_txt($arquivo_name);
+        txt_ler($arquivo_name);
+
         ?>
     </body>
 </html>
