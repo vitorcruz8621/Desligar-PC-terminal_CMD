@@ -1,54 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Calcular Horário</title>
+    <title>Document</title>
 </head>
-<body>
-    <?php
+    <body>
+        <?php
+        $arquivo_name = 'arquivo_vitor.txt';
+        $text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.';
 
-    $myfileName = "arquivo_vitor.txt";
+        function acrescentar_txt($arquivo_name, $resultado){
+            $myfile = fopen($arquivo_name, a) or die ("arquivo não encontrado");
+            fwrite($myfile, "\n".$resultado);
 
-    function ler_arquivo($myfileName) {
-        $myfile = fopen($myfileName, "r") or die("Unable to open file!");
-        echo fread($myfile,filesize($myfileName));
-        fclose($myfile);
-    }
-
-    function ler_arquivo_por_linha($myfileName) {
-        $myfile = fopen($myfileName, "r") or die("Unable to open file!");
-
-        while(!feof($myfile)) {
-            echo fgets($myfile) . "<br>";
+            fclose($myfile);
         }
 
-        fclose($myfile);
-    }
+        function iniciar_txt($arquivo_name){
+            $myfile = fopen($arquivo_name, w) or die ("arquivo não encontrado");
+            fwrite($myfile, "Números:\n");
 
-    function ler_arquivo_por_caractere($myfileName) {
-        $myfile = fopen($myfileName, "r") or die("Unable to open file!");
-
-        while(!feof($myfile)) {
-            echo fgetc($myfile);
+            fclose($myfile);
         }
 
-        fclose($myfile);
-    }
+        function ler_txt($arquivo_name){
+            $myfile = fopen($arquivo_name, r) or die ("arquivo não encontrado");
+            //echo fread($myfile, filesize($arquivo_name));
 
-    function escrever_arquivo($myfileName){
-        $myfileName = "arquivo_vitor.txt";
-        $myfile = fopen($myfileName, "w") or die("Unable to open file!");
-        $txt = "John Doe";
-        fwrite($myfile, $txt);
-        fclose($myfile);
-    }
+            while(!feof($myfile)) {
+                echo fgets($myfile) . "<br>";
+            }
 
-    if( !escrever_arquivo($myfileName) ){ echo "<br/>_fracasso."; }
-    else
-        echo "sucesso";
+            fclose($myfile);
+        }
 
-    ?>
-</body>
+        iniciar_txt($arquivo_name);
+
+        for ($cont = 14400; $cont > 0; $cont--) {
+            $resultado = $cont/60;
+            $resultado = number_format($resultado, 3, ',', '.');
+            acrescentar_txt($arquivo_name, $resultado);
+        }
+
+        //ler_txt($arquivo_name);
+        ?>
+    </body>
 </html>
