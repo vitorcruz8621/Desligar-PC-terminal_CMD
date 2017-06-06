@@ -14,24 +14,29 @@
 
 <script>
 
-funcao_exibirHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _shutdown, _myTime){
-	console.log("\n" +
-				"Faltam horas = " + _faltamHoras.toFixed(2) + "\n" +
-				"Faltam minutos = " + _faltamMinutos.toFixed(2) + "\n" +
-				"Faltam segundos = " + _faltamSegundos.toFixed(2) + "\n" +
-				"Data Completa = " + _myTime + "\n" +
-				"Horario desligamento(segundos)" + _shutdown + "\n");
-}
+/*funcao_gmdate = function(_shutdown){
+	_novo_1_horas = _shutdown / 3600;
+	_novo_2_minutos = (_shutdown % 3600) / 60;
+	_novo_3_segundos = (_shutdown % 3600) % 60;
 
-funcao_calcularHorario = function(_faltamHoras, _faltamMinutos, _faltamSegundos, _condicao){
-	if(_faltamSegundos != 0) _faltamSegundos = 60 - _faltamSegundos;
-	if(_faltamMinutos != 0) _faltamMinutos = 60 - _faltamMinutos;
+	gmdate = _novo_1_horas.toFixed(0) +"(h) : "+
+		_novo_2_minutos.toFixed(0) +"(m) : "+
+		_novo_3_segundos.toFixed(0) +"(s)";
 
-	if(_condicao == "manha") { _faltamHoras = 12 - _faltamHoras; }
-	else if(_condicao == "tarde"){ _faltamHoras = 18 - _faltamHoras; }
+	return gmdate;
+}*/
+
+funcao_calcularHorario = function(_Horas, _Minutos, _Segundos, _condicao){
+	_faltamHoras = 0, _faltamMinutos = 0, _faltamSegundos = 0;
+
+	if(_Segundos != 0) _faltamSegundos = 60 - _Segundos;
+	if(_Minutos != 0) _faltamMinutos = 60 - _Minutos;
+
+	if(_condicao == "manha") { _faltamHoras = 12 - _Horas; }
+	else if(_condicao == "tarde"){ _faltamHoras = 18 - _Horas; }
 	else { console.log('erro;') }
 
-	return ( (_faltamHoras*3600) + (_faltamMinutos*60) + (_faltamSegundos - 120) );
+	return ( (_faltamHoras*3600) + (_faltamMinutos*60) + (_faltamSegundos - 100) );
 
 }
 
@@ -39,52 +44,34 @@ funcao_horarioShutdown = function(_condicao){
 
 	var _myTime = new Date();
 
-	var _faltamSegundos = _myTime.getSeconds();
-	var _faltamMinutos = _myTime.getMinutes();
-	var _faltamHoras = _myTime.getHours() + 1;
+	var _Segundos = _myTime.getSeconds();
+	var _Minutos = _myTime.getMinutes();
+	var _Horas = _myTime.getHours() + 1;
 
-	/*if (_faltamHoras < 12) _condicao = "manha";
-	else _condicao = "tarde";*/
+	var _shutdown = funcao_calcularHorario(_Horas, _Minutos, _Segundos, _condicao);
 
-	var _shutdown = funcao_calcularHorario(_faltamHoras, _faltamMinutos, _faltamSegundos, _condicao);
+	//var _gmdate = funcao_gmdate(_shutdown);
 
 	if(_condicao == "manha"){
-		$("p:eq(0)").append(
+		$("#p1").append(
 			"Para desligar o computador automaticamente às 12:00" + 
 			", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)"+
 			"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"' /h para hibernar>"
 		);
 
 	} else if(_condicao == "tarde"){
-		$("p:eq(1)").append(
+		$("#p2").append(
 			"Para desligar o computador automaticamente às 18:00" + 
 			", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)" +
-			"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"' /h para hibernar>" +
-			"<p/>Para cancelar o desligamento do computador, insira no CMD o comando:" +
-			"<br/> <input type='text' value='shutdown -a'>"
+			"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"' /h para hibernar>"
 		);
 
+		$("#p3").append(
+			"Para cancelar o desligamento do computador, insira no CMD o comando:" +
+			"<br/> <input type='text' value='shutdown -a'>"
+		)
+
 	} else{ }
-
-	/*
-	se (_shutdown / 3600) > 0 ---> _faltamhoras
-	se (_shutdown % 3600) > 0 ---> _faltamMinutos
-	se (_shutdown % 3600) > 0 ---> _faltamSegundos
-	*/
-
-	_faltamHoras = ((_faltamMinutos / 60) >= 1) ? (_faltamMinutos / 60) : 0;
-	_faltamMinutos = ((_shutdown / 60) >= 1) ? (_shutdown / 60) : 0;
-	_faltamSegundos = ((_faltamMinutos % 60) >= 1) ? (_faltamMinutos / 60) : 0;
-
-	$("p:eq(2)").append(
-			"Faltam horas = " + _faltamHoras.toFixed(2) + "<br/>" +
-			"Faltam minutos = " + _faltamMinutos.toFixed(2) + "<br/>" +
-			"Faltam segundos = " + _faltamSegundos.toFixed(2) + "<br/>" +
-			"Data Completa = " + _myTime + "<br/>" +
-			"Horario desligamento(segundos)" + _shutdown + "<br/>"
-	);
-
-	//funcao_exibirHorario(_faltamHoras, _faltamMinutos, _faltamSegundos, _myTime);
 
 	return;
 }
@@ -92,19 +79,19 @@ funcao_horarioShutdown = function(_condicao){
 
 
 <button id="btn1">CLICK</button>
-<p></p>
-<p></p>
-<p></p>
+<div id="p1"></div><br/>
+<div id="p2"></div><br/>
+<div id="p3"></div><br/>
 
 <script>
 $(document).ready(function(){
 
 	$('#btn1').click(function(){
-		$('p').empty();
+		$('div').empty();
 		var _myTime = new Date();
 		if( _myTime.getHours() <= 12 ) funcao_horarioShutdown("manha");
 		if( _myTime.getHours() <= 18 ) funcao_horarioShutdown("tarde");
-		else $('p:eq(0)').append('<strong>O espediente por hoje acabou.</strong>');
+		else $('#p1').append('<strong>O espediente por hoje acabou.</strong>');
 	    //$("#btn1").on('click', function(){});
 	});
 });
