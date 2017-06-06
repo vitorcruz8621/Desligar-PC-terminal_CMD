@@ -10,10 +10,14 @@
         <?php
         $arquivo_name = 'arquivo_vitor.txt';
 
-        function acrescentar_txt($arquivo_name, $resultado, $resto){
+        function acrescentar_txt($arquivo_name, $minutos, $segundos){
             $myfile = fopen($arquivo_name, a) or die ("arquivo não encontrado");
-            fwrite($myfile, "\n".$resultado);
-            if($resto != 0){ fwrite($myfile, " ---resto---> ".$resto); }
+            fwrite($myfile, "\n---minutos---> ".$minutos." / ");
+            
+            if($segundos != 0){
+                if($segundos >= 10) { fwrite($myfile, " ---segundos--> ".$segundos." / FIM"); }
+                else { fwrite($myfile, " ---segundos--> 0".$segundos." / FIM"); }
+            }
 
             fclose($myfile);
         }
@@ -38,10 +42,14 @@
 
         iniciar_txt($arquivo_name);
 
+        echo (6 - ceil(5.8) . "<p/>");
+
         for ($cont = 14400; $cont > 0; $cont--) {
-            $resultado = number_format( ($cont/60), 3, ',', '.' );
-            $resto = number_format( ($cont % 60), 0, ',', '.' );
-            acrescentar_txt($arquivo_name, $resultado, $resto);
+
+            $minutos = number_format( ($cont/60), 3, ',', '.' );
+            $segundos = number_format( ($cont % 60), 0, ',', '.' );
+
+            acrescentar_txt($arquivo_name, $minutos, $segundos);
         }
 
         ler_txt($arquivo_name);
