@@ -40,6 +40,15 @@ funcao_calcularHorario = function(_Horas, _Minutos, _Segundos, _condicao){
 
 }
 
+funcao_gmDate = function(_shutdown){
+	let gm_horas = Math.floor(_shutdown / 3600);
+	let gm_minutos = Math.floor( (_shutdown / 60) - (gm_horas * 60) );
+	let gm_segundos = (_shutdown % 3600) % 60;
+	var gm_Data = String(gm_horas+":"+gm_minutos+":"+gm_segundos);
+
+	return gm_Data;
+}
+
 funcao_horarioShutdown = function(_condicao){
 
 	var _myTime = new Date();
@@ -53,23 +62,33 @@ funcao_horarioShutdown = function(_condicao){
 	//var _gmdate = funcao_gmdate(_shutdown);
 
 	if(_condicao == "manha"){
+
+		// var _shutdownMilisegundos = _shutdown * 100;
+		// var _newTime = Date(_shutdownMilisegundos);
+		let gm_Data = funcao_gmDate(_shutdown);
+
 		$("#p1").append(
+			"Tempo restante para o desligamento:" +
+			"<br/> <input type='text' value='"+gm_Data+"'>"
+		);
+
+		$("#p2").append(
 			"Para desligar o computador automaticamente às 12:00" + 
 			", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)"+
 			"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"' /h para hibernar>"
 		);
 
 	} else if(_condicao == "tarde"){
-		$("#p2").append(
+		$("#p3").append(
 			"Para desligar o computador automaticamente às 18:00" + 
 			", copie o comando abaixo e cole-o no seu Prompt de Comando(CMD)" +
 			"<br/> <input type='text' value='shutdown -s -t "+_shutdown+"' /h para hibernar>"
 		);
 
-		$("#p3").append(
+		$("#p4").append(
 			"Para cancelar o desligamento do computador, insira no CMD o comando:" +
 			"<br/> <input type='text' value='shutdown -a'>"
-		)
+		);
 
 	} else{ }
 
@@ -82,6 +101,7 @@ funcao_horarioShutdown = function(_condicao){
 <div id="p1"></div><br/>
 <div id="p2"></div><br/>
 <div id="p3"></div><br/>
+<div id="p4"></div><br/>
 
 <script>
 $(document).ready(function(){
