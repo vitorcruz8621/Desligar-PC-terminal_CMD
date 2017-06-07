@@ -1,0 +1,7 @@
+Testar:
+
+1) https://stackoverflow.com/questions/4673527/converting-milliseconds-to-a-date-jquery-js
+
+
+Proxima atualização:
+- permitir que o cliente escolha(digite) o horario do desligamento agendado.
