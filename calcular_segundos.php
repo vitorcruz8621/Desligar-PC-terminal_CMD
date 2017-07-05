@@ -32,8 +32,17 @@
             fclose($myfile);
         }
 
+        function calcular_um($min){
+            $energia = $min * 60 * 10;
+            $horas = floor($energia / 3600);
+            $minutos = floor( ($energia / 60) - ($horas * 60) );
+            $segundos = ($energia % 3600) % 60;
+            echo $horas .":". $minutos .":". $segundos;
+        }
+
         function txt_calcular_todos($arquivo_name){
-            for ($cont = 14400; $cont > 0; $cont--) {
+            $min = 100;
+            for ($cont = $min*600; $cont > 0; $cont--) {
                 
                 //$horas = number_format( ($cont / 3600), 3, ',', '.');
                 //$minutos = number_format( ($cont % 3600), 2, ',', '.' );
@@ -73,12 +82,14 @@
         */
 
         $arquivo_name = 'arquivo_vitor.txt';
-
+        
+        /*
         txt_iniciar($arquivo_name);
-
         txt_calcular_todos($arquivo_name);
-
         txt_ler($arquivo_name);
+        */
+
+        calcular_um(100);
 
         ?>
     </body>
