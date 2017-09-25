@@ -1,0 +1,20 @@
+{
+  "name": "Desligar-PC-CMD",
+  "version": "1.0.0",
+  "description": "O codigo javascript em 'index_1.html', ao ser executado, irá renderizar uma página em branco com um botão CLICK.",
+  "main": "jquery.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorcruz8621/Desligar-PC-terminal_CMD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorcruz8621/Desligar-PC-terminal_CMD/issues"
+  },
+  "homepage": "https://github.com/vitorcruz8621/Desligar-PC-terminal_CMD#readme"
+}
